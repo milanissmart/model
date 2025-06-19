@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Solar System</title>
+  <title>Solar System with Glow</title>
   <style>
     body {
       background: black;
@@ -26,12 +26,13 @@
       border-radius: 50%;
       position: absolute;
       z-index: 2;
+      box-shadow: 0 0 40px 20px rgba(255, 255, 0, 0.8);
     }
 
     .earth-orbit {
       width: 300px;
       height: 300px;
-      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       position: absolute;
       animation: rotate-earth 10s linear infinite;
@@ -40,12 +41,13 @@
     .earth {
       width: 40px;
       height: 40px;
-      background: blue;
+      background: #00aaff;
       border-radius: 50%;
       position: absolute;
       top: 50%;
       left: 100%;
       transform: translate(-50%, -50%);
+      box-shadow: 0 0 20px 8px rgba(0, 170, 255, 0.7);
     }
 
     .moon-orbit {
@@ -61,12 +63,13 @@
     .moon {
       width: 15px;
       height: 15px;
-      background: lightgray;
+      background: #ccc;
       border-radius: 50%;
       position: absolute;
       top: 50%;
       left: 100%;
       transform: translate(-50%, -50%);
+      box-shadow: 0 0 12px 4px rgba(200, 200, 200, 0.5);
     }
 
     @keyframes rotate-earth {
