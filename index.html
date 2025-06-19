@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Solar System with Glow</title>
+  <title>Solar System with Glow and Controls</title>
   <style>
     body {
       background: black;
       overflow: hidden;
       margin: 0;
+      font-family: sans-serif;
     }
 
     .space {
@@ -36,6 +37,7 @@
       border-radius: 50%;
       position: absolute;
       animation: rotate-earth 10s linear infinite;
+      animation-play-state: running;
     }
 
     .earth {
@@ -58,6 +60,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       animation: rotate-moon 2s linear infinite;
+      animation-play-state: running;
     }
 
     .moon {
@@ -89,18 +92,61 @@
         transform: translate(-50%, -50%) rotate(360deg);
       }
     }
+
+    .controls {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+    }
+
+    .controls button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+      color: white;
+      padding: 8px 16px;
+      margin-right: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .controls button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
   </style>
 </head>
 <body>
   <div class="space">
     <div class="sun"></div>
-    <div class="earth-orbit">
+    <div class="earth-orbit" id="earthOrbit">
       <div class="earth">
-        <div class="moon-orbit">
+        <div class="moon-orbit" id="moonOrbit">
           <div class="moon"></div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="controls">
+    <button onclick="pauseAnimation()">Pause</button>
+    <button onclick="playAnimation()">Play</button>
+  </div>
+
+  <script>
+    const earthOrbit = document.getElementById("earthOrbit");
+    const moonOrbit = document.getElementById("moonOrbit");
+
+    function pauseAnimation() {
+      earthOrbit.style.animationPlayState = "paused";
+      moonOrbit.style.animationPlayState = "paused";
+    }
+
+    function playAnimation() {
+      earthOrbit.style.animationPlayState = "running";
+      moonOrbit.style.animationPlayState = "running";
+    }
+  </script>
 </body>
 </html>
