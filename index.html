@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Solar System with Speed Control</title>
+  <title>Solar System with Rotation and Speed</title>
   <style>
     body {
       background: black;
@@ -40,16 +40,35 @@
       animation-play-state: running;
     }
 
-    .earth {
+    .earth-spin {
       width: 40px;
       height: 40px;
-      background: #00aaff;
-      border-radius: 50%;
       position: absolute;
       top: 50%;
       left: 100%;
       transform: translate(-50%, -50%);
+      animation: spin-earth 2s linear infinite;
+      animation-play-state: running;
+    }
+
+    .earth {
+      width: 100%;
+      height: 100%;
+      background: #00aaff;
+      border-radius: 50%;
+      position: relative;
       box-shadow: 0 0 20px 8px rgba(0, 170, 255, 0.7);
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+      top: 10px;
+      left: 2px;
+      z-index: 2;
     }
 
     .moon-orbit {
@@ -76,21 +95,18 @@
     }
 
     @keyframes rotate-earth {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     @keyframes rotate-moon {
-      0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-      }
-      100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-      }
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes spin-earth {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
     .controls {
@@ -116,9 +132,12 @@
   <div class="space">
     <div class="sun"></div>
     <div class="earth-orbit" id="earthOrbit">
-      <div class="earth">
-        <div class="moon-orbit" id="moonOrbit">
-          <div class="moon"></div>
+      <div class="earth-spin" id="earthSpin">
+        <div class="earth">
+          <div class="dot"></div>
+          <div class="moon-orbit" id="moonOrbit">
+            <div class="moon"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -135,25 +154,29 @@
   <script>
     const earthOrbit = document.getElementById("earthOrbit");
     const moonOrbit = document.getElementById("moonOrbit");
+    const earthSpin = document.getElementById("earthSpin");
     const speedSlider = document.getElementById("speedSlider");
 
     function pauseAnimation() {
       earthOrbit.style.animationPlayState = "paused";
       moonOrbit.style.animationPlayState = "paused";
+      earthSpin.style.animationPlayState = "paused";
     }
 
     function playAnimation() {
       earthOrbit.style.animationPlayState = "running";
       moonOrbit.style.animationPlayState = "running";
+      earthSpin.style.animationPlayState = "running";
     }
 
     speedSlider.addEventListener("input", function () {
       const earthSpeed = this.value;
-      // Faster Earth = smaller duration, Moon also scales
       const moonSpeed = earthSpeed / 5;
+      const spinSpeed = 2 / (earthSpeed / 10); // adjust spin inversely
 
       earthOrbit.style.animationDuration = earthSpeed + "s";
       moonOrbit.style.animationDuration = moonSpeed + "s";
+      earthSpin.style.animationDuration = spinSpeed + "s";
     });
   </script>
 </body>
