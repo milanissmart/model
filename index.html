@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Solar System with Glow and Controls</title>
+  <title>Solar System with Speed Control</title>
   <style>
     body {
       background: black;
@@ -98,22 +98,17 @@
       top: 20px;
       left: 20px;
       z-index: 10;
-    }
-
-    .controls button {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid white;
       color: white;
-      padding: 8px 16px;
-      margin-right: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 14px;
-      transition: background 0.3s;
     }
 
-    .controls button:hover {
-      background: rgba(255, 255, 255, 0.3);
+    .controls button,
+    .controls input[type="range"] {
+      margin-right: 10px;
+      margin-bottom: 5px;
+    }
+
+    .controls label {
+      font-size: 14px;
     }
   </style>
 </head>
@@ -132,11 +127,15 @@
   <div class="controls">
     <button onclick="pauseAnimation()">Pause</button>
     <button onclick="playAnimation()">Play</button>
+    <br>
+    <label for="speedSlider">Speed: </label>
+    <input type="range" id="speedSlider" min="1" max="20" value="10">
   </div>
 
   <script>
     const earthOrbit = document.getElementById("earthOrbit");
     const moonOrbit = document.getElementById("moonOrbit");
+    const speedSlider = document.getElementById("speedSlider");
 
     function pauseAnimation() {
       earthOrbit.style.animationPlayState = "paused";
@@ -147,6 +146,15 @@
       earthOrbit.style.animationPlayState = "running";
       moonOrbit.style.animationPlayState = "running";
     }
+
+    speedSlider.addEventListener("input", function () {
+      const earthSpeed = this.value;
+      // Faster Earth = smaller duration, Moon also scales
+      const moonSpeed = earthSpeed / 5;
+
+      earthOrbit.style.animationDuration = earthSpeed + "s";
+      moonOrbit.style.animationDuration = moonSpeed + "s";
+    });
   </script>
 </body>
 </html>
